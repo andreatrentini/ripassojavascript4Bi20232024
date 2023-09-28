@@ -14,3 +14,4 @@ messaggi.forEach(messaggio => {
     // 4. aggiungere il tag al DOM
     principale.appendChild(paragrafo);
 });
+
