@@ -10,13 +10,15 @@ function getMovies() {
         let principale = document.getElementById('principale');
         principale.appendChild(createDropDownList(getGenres(dati)));
         principale.appendChild(createMoviesTable(dati));
-        console.log('gen', getGenres(dati));
+        console.log(dati);
+        console.log(filterMoviesByGenre('(no genres listed)', dati));
     })
 }
 
 function createMoviesTable(dati) {
     let table = document.createElement('table');
     table.className = 'table';
+    table.id = 'table';
     table.appendChild(createMoviesHeader());
     table.appendChild(createMoviesBody(dati));
     //creare il body
@@ -61,21 +63,22 @@ function getGenres(dati) {
     return [... new Set(dati.map(movie => movie.genres.split('|')).flat())];
 }
 
-function createDropDownList(dati) {
-    /*
-    <select class="form-select form-select-lg mb-3" aria-label="Large select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-        </select>
-    */
+function filterMoviesByGenre(genre, dati) {
+    return dati.filter(movie => {
+        return movie.genres.includes(genre);
+    })
+}
 
+function createDropDownList(dati) {
     let select = document.createElement('select');
     select.className = 'form-select form-select-lg mb-3';
+    select.onchange = (() => {        
+        filterMovies(select.value);
+    })
     let option = document.createElement('option');
-    option.selected;
-    option.innerText = 'Seleziona il genere';
+    //option.selected;
+    option.innerText = 'Tutti i generi';
+    option.value = '';
     select.appendChild(option);
     dati.forEach(genre => {
         option = document.createElement('option');
@@ -84,6 +87,14 @@ function createDropDownList(dati) {
         select.appendChild(option);
     });
     return select;
+}
+
+function filterMovies(genre) {
+    let dati = filterMoviesByGenre(genre, movies);
+    let principale = document.getElementById('principale');
+    let table = document.getElementById('table');
+    principale.removeChild(table);    
+    principale.appendChild(createMoviesTable(dati));
 }
 
 getMovies();
