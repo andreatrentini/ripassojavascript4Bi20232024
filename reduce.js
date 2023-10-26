@@ -6,4 +6,16 @@ function reduceDati(dati) {
     })
 }
 
-console.log(reduceDati(dati));
+function elaboraFilm() {
+    fetch('./movies.json')
+    .then(dati => dati.json())
+    .then (dati => {
+        let risultato = dati.reduce((titoli, movie) => {
+            return titoli + movie.title.substring(0,3);
+        })
+        console.log(risultato);
+    })
+}
+
+
+elaboraFilm();

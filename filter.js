@@ -23,7 +23,7 @@ function filterTradizionale2(dati) {
 
 function filterNew(dati) {
     let risultato;
-    risultato = dati.filter(controllo(dato));
+    risultato = dati.filter(controllo2(dato));
     return risultato;
 }
 
@@ -31,9 +31,7 @@ function filterNew2(dati) {
     let risultato;
 
     risultato = dati.filter(function (dato) {
-        if (dato % 2 == 0) {
-            return true;
-        }
+        return dato % 2 == 0;
     })
     return risultato;
 }
@@ -41,9 +39,7 @@ function filterNew2(dati) {
 function filterNew3(dati) {
     let risultato;
     risultato = dati.filter((dato) => {
-        if (dato % 2 == 0) {
-            return true;
-        }
+        return dato % 2 == 0
     })
     return risultato;
 }
@@ -56,6 +52,10 @@ function controllo(dato) {
     if (dato % 2 == 0) {
         return true;
     }
+}
+
+function controllo2(dato) {
+    return dato % 2 == 0;    
 }
 
 console.log(filterNew4(dati));

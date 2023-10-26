@@ -6,4 +6,17 @@ function mapDati(dati) {
     })
 }
 
-console.log(mapDati(dati));
+function trasformaFilm() {
+    fetch('./movies.json')
+    .then(dati => dati.json())
+    .then(dati => {
+        let nuoviDati = dati.map((film) => {
+            return {titolo: film.title, durata: film.durata}
+        });
+        console.log(nuoviDati);
+    })
+}
+
+trasformaFilm();
+
+//console.log(mapDati(dati));
