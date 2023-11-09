@@ -36,20 +36,41 @@ function getTokenBearer() {
 }
 
 function getArtistsList(artistName) {
-    fetch('https://api.spotify.com/v1/search?q=artist%3A' + artistName, {
+    fetch('https://api.spotify.com/v1/search?q=artist:' + artistName +'&type=artist', {
         headers: {
             Authorization: 'Bearer '+ tokenBearer
         }
     })
     .then(response => response.json())
     .then(response => {
-        console.log(response)
+        console.log(response);
+        let artisti = response.artists.items;
+        let principale = document.getElementById('principale');
+        let lista = createArtistsList(artisti);
+        principale.appendChild(lista);
+        console.log(artisti)
     })
+}
+function getArtistsAlbums(artistId) {
+    console.log(artistId);
 }
 
 function ricerca() {
     let artistName = document.getElementById('inputName').value;
     getArtistsList(artistName);
+}
+
+function createArtistsList(artisti) {
+    let elenco = document.createElement('ul');
+    artisti.forEach(artista => {
+        let elemento = document.createElement('li');
+        elemento.innerText = artista.name;
+        elemento.onclick = () => {
+            getArtistsAlbums(artista.id);
+        }
+        elenco.appendChild(elemento);
+    });
+    return elenco;
 }
 
 getTokenBearer();
